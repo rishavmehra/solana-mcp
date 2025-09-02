@@ -1,5 +1,6 @@
 import { address } from "@solana/kit";
 import { rpc } from "../utils/rpc";
+import { LAMPORTS_PER_SOL } from "../utils/const";
 
 export const getBalance = async (args: { [x: string]: any }, extra: any) => {
     try{
@@ -7,7 +8,7 @@ export const getBalance = async (args: { [x: string]: any }, extra: any) => {
         const lamportsResponse = await rpc.getBalance(adr)
         const response = await lamportsResponse.send()
         const lamports = response.value
-        const balanceInSol = Number(lamports) / 1_000_000_000
+        const balanceInSol = Number(lamports) / LAMPORTS_PER_SOL
         return {
             content: [
                 {
