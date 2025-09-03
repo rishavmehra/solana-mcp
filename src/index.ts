@@ -5,6 +5,8 @@ import { getBalance } from "./tools/getBalance";
 import { getAccountInfo } from "./tools/getAccountInfo";
 import { getTokenAccountAddresses } from "./tools/getToken";
 import { getTransactioninfo } from "./tools/getTransaction";
+import { solPrice } from "./tools/solPrice";
+
 
 const server = new McpServer({
     name: "solana-mcp",
@@ -34,9 +36,16 @@ server.tool(
 
 server.tool(
     "getTransaction",
-    "get transaction from ",
+    "get transaction from signature ",
     { signature: z.string().describe("Wallet address to check the token account addresses for") },
     getTransactioninfo
+)
+
+server.tool(
+    "solPrice",
+    "get the price of SOL",
+    {},
+    solPrice
 )
 
 async function main() {
@@ -50,14 +59,14 @@ main().catch((error) => {
     process.exit(1);
 });
 
-const walletAddress = process.env.WALLET_ADDRESS || ""
+// const walletAddress = process.env.WALLET_ADDRESS || ""
 
-// async function main () {
-//     // let res = await getBalance({walletAddress: walletAddress}, {} as any)
-//     // let res2 = await getAccountInfo({account: walletAddress}, {} as any)
-//     // let res3 = await getTokenAccountAddresses({account: walletAddress}, {} as any)
-//     let tranaction = await getTransactioninfo({signature: "476TQoZfEzstwdzjjVXuRD5Sp5bdyxSEUyVBoFvdHqjLgMh6xv4XB6c893gjyeT2nvHTML2QWssJSc4vu9kbrQAQ"}, {} as const)
-//     console.log(tranaction);
-// }
+// // async function main () {
+// //     // let res = await getBalance({walletAddress: walletAddress}, {} as any)
+// //     // let res2 = await getAccountInfo({account: walletAddress}, {} as any)
+// //     // let res3 = await getTokenAccountAddresses({account: walletAddress}, {} as any)
+// //     let tranaction = await getTransactioninfo({signature: "476TQoZfEzstwdzjjVXuRD5Sp5bdyxSEUyVBoFvdHqjLgMh6xv4XB6c893gjyeT2nvHTML2QWssJSc4vu9kbrQAQ"}, {} as const)
+// //     console.log(tranaction);
+// // }
 
-// main()
+// // main()°
