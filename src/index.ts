@@ -6,7 +6,7 @@ import { getAccountInfo } from "./tools/getAccountInfo";
 import { getTokenAccountAddresses } from "./tools/getToken";
 import { getTransactioninfo } from "./tools/getTransaction";
 import { solPrice } from "./tools/solPrice";
-
+import { sendSol } from "./tools/sendSol";
 
 const server = new McpServer({
     name: "solana-mcp",
@@ -48,6 +48,17 @@ server.tool(
     solPrice
 )
 
+server.tool(
+    "sendSol",
+    "send SOL to a wallet address",
+    {
+        recipient: z.string().describe("Wallet address to send SOL to"),
+        amount: z.number().describe("Amount of SOL to send"),
+    },
+    sendSol
+)
+
+
 async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);
@@ -61,12 +72,14 @@ main().catch((error) => {
 
 // const walletAddress = process.env.WALLET_ADDRESS || ""
 
-// // async function main () {
-// //     // let res = await getBalance({walletAddress: walletAddress}, {} as any)
-// //     // let res2 = await getAccountInfo({account: walletAddress}, {} as any)
-// //     // let res3 = await getTokenAccountAddresses({account: walletAddress}, {} as any)
-// //     let tranaction = await getTransactioninfo({signature: "476TQoZfEzstwdzjjVXuRD5Sp5bdyxSEUyVBoFvdHqjLgMh6xv4XB6c893gjyeT2nvHTML2QWssJSc4vu9kbrQAQ"}, {} as const)
-// //     console.log(tranaction);
-// // }
+// async function main () {
+//     // let res = await getBalance({walletAddress: walletAddress}, {} as any)
+//     // let res2 = await getAccountInfo({account: walletAddress}, {} as any)
+//     // let res3 = await getTokenAccountAddresses({account: walletAddress}, {} as any)
+//     // let tranaction = await getTransactioninfo({signature: "476TQoZfEzstwdzjjVXuRD5Sp5bdyxSEUyVBoFvdHqjLgMh6xv4XB6c893gjyeT2nvHTML2QWssJSc4vu9kbrQAQ"}, {} as const)
+//     // console.log(tranaction);
+//     let res = await sendSol({recipient: "CgL8Tgc3Ay5Gddr1ujxBbP2hDZfJmvMMnCGzKHR15kPY", amount: 1}, {} as any)
+//     console.log(res);
+// }
 
-// // main()°
+// main()
